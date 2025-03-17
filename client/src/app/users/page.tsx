@@ -4,6 +4,12 @@ import { useGetUsersQuery } from "@/state/api";
 import Header from "@/app/(components)/Header";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 
+interface User {
+  userId: number;
+  name: string;
+  email: string;
+}
+
 const columns: GridColDef[] = [
   { field: "userId", headerName: "ID", width: 90 },
   { field: "name", headerName: "Name", width: 200 },
@@ -11,7 +17,9 @@ const columns: GridColDef[] = [
 ];
 
 const Users = () => {
-  const { data: users, isError, isLoading } = useGetUsersQuery();
+  // Extract the correct type from the hook
+  const { data: users, isError, isLoading } =
+    useGetUsersQuery() as { data?: User[]; isError: boolean; isLoading: boolean };
 
   if (isLoading) {
     return <div className="py-4">Loading...</div>;
